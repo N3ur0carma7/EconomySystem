@@ -2,10 +2,13 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
     run: ({ interaction }) => {
+        const subcommandGroup = interaction.options.getSubcommandGroup();
         const subcommand = interaction.options.getSubcommand();
 
-        if (subcommand === 'user') {
-            interaction.reply("configuring user...");
+        if (subcommandGroup === 'user') {
+            if (subcommand === 'role') {
+                interaction.reply("configuring user's role...");
+            }
         }
     },
     
@@ -19,7 +22,7 @@ module.exports = {
                 .addSubcommand((subcommand) => 
                     subcommand
                         .setName('role')
-                        .setDescription("The role you want to give to the user.")
+                        .setDescription("Configure a user's role.")
                         .addUserOption((option) => 
                             option
                                 .setName('target-user')
