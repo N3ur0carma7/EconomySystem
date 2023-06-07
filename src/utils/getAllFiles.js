@@ -19,7 +19,6 @@ module.exports = (directory, foldersOnly = false) => {
             }
         }
     }
-    console.log(fileNames);
-    return fileNames;
 
+    return fileNames;
 }
