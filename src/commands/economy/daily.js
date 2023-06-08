@@ -6,7 +6,7 @@ const dailyAmount = 1000;
 module.exports = {
   name: 'daily',
   description: 'Collecte ta récompense quotidienne.',
-  devOnly: true,
+  // devOnly: true,
   /**
    *
    * @param {Client} client

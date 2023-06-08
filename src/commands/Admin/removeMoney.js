@@ -18,7 +18,6 @@ module.exports = {
 
         const targetUserId = interaction.options.get('target-user').value;
         const setAmount = interaction.options.get('amount').value;
-        trigger = 0
 
         try {
             await interaction.deferReply();
@@ -32,52 +31,47 @@ module.exports = {
             let user = await User.findOne(query);
 
             if (!user) {
-                user = new User({
-                    ...query,
-                    balance: 0,
-                    lastDaily: 0,
-                });
-                trigger = 1
+                interaction.editReply(`<@${targetUserId}> n'a pas encore de compte banquaire. Pour lui en ajouter un manuellement, veillez exécuter la commande : /admin-add-account`);
+                return;
             }
+
+            amountDifference = user.balance - setAmount
 
             if (setAmount < 0) {
                 interaction.editReply({
-                    content: "Je ne peux pas mettre de l'argent en dessous de 0.",
+                    content: "NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !",
                     ephemeral: true,
                 });
-                return;
-            }
-        
-            if (setAmount === user.balance) {
-                interaction.editReply({ 
-                    content: "Le montant que vous avez mis correspond exactement au nombre d'argent de l'utilisateur." ,
-                    ephemeral: true,
-                });
+                amountDifference = 0
                 return;
             }
 
-            user.balance = setAmount;
+            if (amountDifference < 0) {
+                interaction.editReply({
+                    content: `Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`,
+                    ephemeral: true,
+                });
+                amountDifference = 0
+                return;
+            }
+
+            user.balance -= setAmount;
             await user.save();
 
-            if (trigger === 1) {
-                interaction.editReply(
-                    `<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant ${user.balance} kastocoins.`,
-                );
-            } else {
-                interaction.editReply(
-                    `Le compte banquaire de <@${targetUserId}> a maintenant ${user.balance} kastocoins.`
-                );
-            }
+            interaction.editReply(
+                `J'ai enlevé ${setAmount} kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant ${user.balance} kastocoins.`
+            );
 
-            trigger = 0
+            amountDifference = 0
+            
         } catch (error) {
-            console.log(`An error occured with /admin-set-balance : ${error}`);
+            console.log(`An error occured with /admin-remove-money : ${error}`);
         }
         
     },
 
-    name: 'admin-set-balance',
-    description: "Permet de modifier le compte banquaire d'un membre à une certaine valeur.",
+    name: 'admin-remove-money',
+    description: "Permet d'enlever de l'argent au compte banquaire d'un membre.",
     // devOnly: true,
     // testOnly: true,
     // deleted: true,
@@ -90,7 +84,7 @@ module.exports = {
         },
         {
             name: 'amount',
-            description: "Le montant à entrer.",
+            description: "Le montant à enlever.",
             type: ApplicationCommandOptionType.Number,
             required: true,
         }

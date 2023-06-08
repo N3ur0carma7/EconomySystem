@@ -23,14 +23,14 @@ module.exports = {
         const user = await User.findOne({ userId: targetUserId, guildId: interaction.guild.id });
 
         if (!user) {
-            interaction.editReply(`<@${targetUserId}> n'a pas encore reçu de l'argent.`);
+            interaction.editReply(`<@${targetUserId}> n'a pas encore de compte banquaire.`);
             return;
         }
 
         interaction.editReply(
             targetUserId === interaction.member.id
                 ? `Vous avez actuellement **${user.balance}** kastocoins sur votre compte.`
-                : `<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur leur compte.`
+                : `<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`
         )
     }, 
 
