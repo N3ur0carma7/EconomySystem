@@ -38,19 +38,13 @@ module.exports = {
             amountDifference = user.balance - setAmount
 
             if (setAmount < 0) {
-                interaction.editReply({
-                    content: "NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !",
-                    ephemeral: true,
-                });
+                interaction.editReply("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !");
                 amountDifference = 0
                 return;
             }
 
             if (amountDifference < 0) {
-                interaction.editReply({
-                    content: `Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`,
-                    ephemeral: true,
-                });
+                interaction.editReply(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`);
                 amountDifference = 0
                 return;
             }
