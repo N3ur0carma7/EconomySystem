@@ -1,4 +1,3 @@
-const { trigger } = require('canvacord/typings/src/Canvacord');
 const User = require('../../models/User');
 const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction } = require('discord.js');
 
