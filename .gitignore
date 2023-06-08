@@ -1,8 +1,5 @@
 .env
 node_modules/.package-lock.json
-node_modules/.bin/canvacord
-node_modules/.bin/canvacord.cmd
-node_modules/.bin/canvacord.ps1
 node_modules/.bin/nodemon
 node_modules/.bin/nodemon.cmd
 node_modules/.bin/nodemon.ps1

@@ -10,8 +10,6 @@
   "author": "Neurocarma",
   "license": "ISC",
   "dependencies": {
-    "@mysql/xdevapi": "8.0.33",
-    "canvacord": "^5.4.9",
     "discord.js": "^14.11.0",
     "djs-commander": "^0.0.47",
     "dotenv": "^16.1.4",
