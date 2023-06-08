@@ -68,7 +68,7 @@ module.exports = {
             await targetUser.save();
 
             interaction.editReply(`
-            <@${interaction.member.id}> a payé à <@${targetUserId}>, **${setAmount}** kastocoins. 
+            <@${interaction.member.id}> a donné à <@${targetUserId}>, **${setAmount}** kastocoins. 
             \n <@${interaction.member.id}> a maintenant ${ownUser.balance} kastocoins sur son compte.
             \n <@${targetUserId}> a maintenant ${targetUser.balance} kastocoins sur son compte.
             `)
