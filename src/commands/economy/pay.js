@@ -23,7 +23,7 @@ module.exports = {
             await interaction.deferReply();
 
             if (targetUserId === interaction.member.id) {
-                interaction.editReply("Tu ne peux pas payer à toi-même :/");
+                interaction.editReply("N'y pense même pas :/");
                 return;
             }
 
