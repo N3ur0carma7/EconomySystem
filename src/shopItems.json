@@ -1,14 +1,22 @@
 [
     {
         "name": "Objet 1", 
-        "price": 10
+        "price": 10,
+        "usable": false
     },
     {
         "name": "Objet 2", 
-        "price": 15
+        "price": 15,
+        "usable": false
     },
     {
         "name": "Objet 3", 
-        "price": 20
+        "price": 20,
+        "usable": false
+    },
+    {
+        "name": "Lootbox Cartes",
+        "price": 1500,
+        "usable": true
     }
 ]

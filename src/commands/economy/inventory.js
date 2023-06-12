@@ -30,13 +30,18 @@ module.exports = {
         .setDescription(`Voici les objets dans l\'inventaire de <@${targetUser}> :`);
 
       inventory.items.forEach((item) => {
-        embed.addFields({ name : item.name, value: `Quantité : ${item.quantity}`});
+        if (item.usable === false) {
+          useAble = "Non.";
+        } else {
+          useAble = "Oui.";
+        }
+        embed.addFields({ name : item.name, value: `Quantité : ${item.quantity} \n Utilisable : ${useAble}`});
       });
 
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
-      console.error('Erreur lors de l\'exécution de la commande "inventory":', error);
-      interaction.followUp('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement.');
+        console.error('Erreur lors de l\'exécution de la commande "inventory":', error);
+        interaction.followUp('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement.');
     }
   },
 
@@ -49,4 +54,7 @@ module.exports = {
       type: ApplicationCommandOptionType.User,
     },
   ],
+  // devOnly: true,
+  // testOnly: true,
+  // deleted: true,
 };

@@ -83,7 +83,7 @@ module.exports = {
                 if (existingItem) {
                     existingItem.quantity++;
                 } else {
-                    inventory.items.push({ name: selectedItem.name, quantity: 1 });
+                    inventory.items.push({ name: selectedItem.name, quantity: 1, usable: selectedItem.usable });
                 }
 
                 user.balance -= totalPrice;
@@ -98,7 +98,7 @@ module.exports = {
                 if (collected.size === 0) {
                     interaction.editReply(`<@${interaction.user.id}>**La session d\'achat a expiré. Veuillez réessayer.**`);
                 } else {
-                    interaction.followUp(`Session d'achat terminée <@${interaction.user.id}>. Tu as acheté **${collected.size}** items.`);
+                    interaction.followUp(`Session d'achat terminée <@${interaction.user.id}> ! Si tu souhaites voir/utiliser tes items, fait /inventory.`);
                 }
             });
         } catch (error) {
@@ -109,4 +109,7 @@ module.exports = {
 
     name: 'buy',
     description: "Affiche les objets de la boutique et permet d'acheter des objets.",
+    // devOnly: true,
+    // testOnly: true,
+    // deleted: true,
 };

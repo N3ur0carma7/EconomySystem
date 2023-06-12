@@ -17,6 +17,7 @@ const inventorySchema = new Schema({
                 type: Number,
                 default: 0,
             },
+            usable: Boolean,
         },
     ],
 });
