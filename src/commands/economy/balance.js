@@ -1,4 +1,4 @@
-const { Client, Interaction, ApplicationCommandOptionType } = require('discord.js');
+const { Client, Interaction, ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const User = require('../../models/User');
 
 module.exports = {
@@ -27,11 +27,19 @@ module.exports = {
             return;
         }
 
-        interaction.editReply(
-            targetUserId === interaction.member.id
-                ? `Vous avez actuellement **${user.balance}** kastocoins sur votre compte.`
-                : `<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`
-        )
+        const ownEmbed = new EmbedBuilder()
+            .setTitle('Balance :')
+            .setDescription(`<@${targetUserId}>, vous avez actuellement **${user.balance}** kastocoins sur votre compte.`);
+
+        const targetEmbed = new EmbedBuilder()
+            .setTitle('Balance :')
+            .setDescription(`<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`);
+        
+        if (targetUserId === interaction.member.id) {
+            interaction.editReply({ embeds: [ownEmbed] })
+        } else {
+            interaction.editReply({ embeds: [targetEmbed] })
+        }
     }, 
 
     name: 'balance',
