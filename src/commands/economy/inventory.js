@@ -15,13 +15,13 @@ module.exports = {
         await interaction.deferReply();
       const user = await User.findOne({ userId: targetUser });
       if (!user) {
-        interaction.editReply("L'utilisateur spécifié n'a pas de compte banquaire, et donc d'items.");
+        interaction.editReply(`<@${targetUser}> n'a pas de compte banquaire, et donc d'items.`);
         return;
       }
 
       const inventory = await Inventory.findOne({ userId: user.userId });
       if (!inventory) {
-        interaction.editReply("L'utilisateur spécifié n'a pas d'inventaire.");
+        interaction.editReply(`<@${targetUser}> n'a pas d'inventaire.`);
         return;
       }
 
