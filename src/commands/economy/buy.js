@@ -38,13 +38,18 @@ module.exports = {
             }
 
             if (shopItems.length === 0) {
-                interaction.editReply('La boutique est actuellement vide.');
+                embed1 = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription('La boutique est actuellement vide.')
+                    .setColor(0xf50505);
+                interaction.editReply({ embeds: [embed1] });
                 return;
             }
 
             const embed = new EmbedBuilder()
                 .setTitle('Boutique')
-                .setDescription('Voici les objets disponibles dans la boutique :');
+                .setDescription('Voici les objets disponibles dans la boutique :')
+                .setColor(0x02eefa);
             
             shopItems.forEach((item, index) => {
                 embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Prix : ${item.price} kastocoins.`});
@@ -53,20 +58,38 @@ module.exports = {
             interaction.editReply({ embeds: [embed] });
 
             const filter = (message) => message.author.id === userId;
-            const collector = interaction.channel.createMessageCollector({ filter, time: 15000 });
+            collector = interaction.channel.createMessageCollector({ filter, time: 15000 });
 
             collector.on('collect', async (message) => {
                 const input = message.content;
 
+                if (input.toLowerCase() === "stop") {
+                    collector.stop();
+                    embed1 = new EmbedBuilder()
+                        .setTitle('Arrêt :')
+                        .setDescription(`Vous avez arrêté la session d\'achat manuellement. <@${userId}>`)
+                        .setColor(0x02eefa);
+                    message.reply({ embeds: [embed1] });
+                    return;
+                }
+
                 if (isNaN(input)) {
-                    message.reply('Veuillez entrer le numéro de l\'objet que vous souhaitez acheter.');
+                    embed1 = new EmbedBuilder()
+                        .setTitle('Erreur :')
+                        .setDescription('Veuillez entrer le numéro de l\'objet que vous souhaitez acheter.')
+                        .setColor(0xf50505);
+                    message.reply({ embeds: [embed1] });
                     return;
                 }
 
                 const itemIndex = parseInt(input) - 1;
 
                 if (itemIndex < 0 || itemIndex >= shopItems.length) {
-                    message.reply('Numéro d\'objet invalide.');
+                    embed1 = new EmbedBuilder()
+                        .setTitle('Erreur :')
+                        .setDescription('Numéro d\'objet invalide')
+                        .setColor(0xf50505);
+                    message.reply({ embeds: [embed1] });
                     return;
                 }
 
@@ -74,7 +97,11 @@ module.exports = {
                 const totalPrice = selectedItem.price;
 
                 if (user.balance < totalPrice) {
-                    message.reply('Vous n\'avez pas assez de kastocoins pour acheter cet objet.');
+                    embed1 = new EmbedBuilder()
+                        .setTitle('Paiement Refusé :')
+                        .setDescription(`Vous n\'avez que **${user.balance}** kastocoins, l'item que vous souhaitez coute **${totalPrice}** kastocoins.`)
+                        .setColor(0xf50505);
+                    message.reply({ embeds: [embed1] });
                     return;
                 }
 
@@ -91,19 +118,37 @@ module.exports = {
                 await inventory.save();
                 await user.save();
 
-                message.reply(`Vous avez acheté un ${selectedItem.name} pour **${selectedItem.price}** kastocoins.`);
+                embed1 = new EmbedBuilder()
+                    .setTitle('Paiement Réussi :')
+                    .setDescription(`Vous avez acheté un ${selectedItem.name} pour **${selectedItem.price}** kastocoins. Il vous reste **${user.balance}** kastocoins sur votre compte`)
+                    .setColor(0x3cfa02);
+                message.reply({ embeds: [embed1] });
             });
 
-            collector.on('end', (collected) => {
-                if (collected.size === 0) {
-                    interaction.editReply(`<@${interaction.user.id}>**La session d\'achat a expiré. Veuillez réessayer.**`);
-                } else {
-                    interaction.followUp(`Session d'achat terminée <@${interaction.user.id}> ! Si tu souhaites voir/utiliser tes items, fait /inventory.`);
+            collector.on('end', (collected, reason) => {
+                if (reason === 'time') {
+                    if (collected.size === 0) {
+                        embed1 = new EmbedBuilder()
+                            .setTitle('Achat Expiré :')
+                            .setDescription(`<@${interaction.user.id}>**La session d\'achat a expiré. Veuillez réessayer.**`)
+                            .setColor(0xf50505);
+                        interaction.followUp({ embeds: [embed1] });
+                    } else {
+                        embed1 = new EmbedBuilder()
+                            .setTitle('Achat Terminé :')
+                            .setDescription(`Session d'achat terminée <@${interaction.user.id}> ! Si tu souhaites voir/utiliser tes items, fait /inventory.`)
+                            .setColor(0x02eefa);
+                        interaction.followUp({ embeds: [embed1] });
+                    }
                 }
             });
         } catch (error) {
             console.error('Erreur lors de l\'exécution de la commande "shop":', error);
-            interaction.editReply('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement.');
+            embed1 = new EmbedBuilder()
+                .setTitle('Erreur code :')
+                .setDescription('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement. \n Si cette erreur se reproduit, veillez contacter @Kastocarma.')
+                .setColor(0xf50505);
+            interaction.editReply({ embeds: [embed1] });
         }
     },
 

@@ -1,5 +1,5 @@
 const User = require('../../models/User');
-const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction } = require('discord.js');
+const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     /**
@@ -40,19 +40,20 @@ module.exports = {
                 trigger = 1
             }
 
+
             if (setAmount < 0) {
-                interaction.editReply({
-                    content: "Je ne peux pas mettre de l'argent en dessous de 0.",
-                    ephemeral: true,
-                });
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription("Je ne peux pas mettre de l'argent en dessous de 0.");
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
         
             if (setAmount === user.balance) {
-                interaction.editReply({ 
-                    content: "Le montant que vous avez mis correspond exactement au nombre d'argent de l'utilisateur." ,
-                    ephemeral: true,
-                });
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription("Le montant que vous avez mis correspond exactement au nombre d'argent de l'utilisateur.");
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
@@ -60,13 +61,15 @@ module.exports = {
             await user.save();
 
             if (trigger === 1) {
-                interaction.editReply(
-                    `<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant ${user.balance} kastocoins.`,
-                );
+                embed = new EmbedBuilder()
+                    .setTitle('Modification (Admin) :')
+                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **${user.balance}** kastocoins.`);
+                interaction.editReply({ embeds: [embed] });
             } else {
-                interaction.editReply(
-                    `Le compte banquaire de <@${targetUserId}> a maintenant ${user.balance} kastocoins.`
-                );
+                embed = new EmbedBuilder()
+                    .setTitle('Modification (Admin) :')
+                    .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **${user.balance}** kastocoins.`);
+                interaction.editReply({ embeds: [embed] });
             }
 
             trigger = 0

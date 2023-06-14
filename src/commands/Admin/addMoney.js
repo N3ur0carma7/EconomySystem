@@ -1,5 +1,5 @@
 const User = require('../../models/User');
-const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction } = require('discord.js');
+const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     /**
@@ -51,15 +51,18 @@ module.exports = {
             user.balance += setAmount;
             await user.save();
 
+            
             if (trigger === 1) {
-                interaction.editReply(
-                    `<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté ${setAmount} et il a maintenant ${user.balance} kastocoins.`,
-                );
+                embed = new EmbedBuilder()
+                .setTitle('Ajouter (Admin) :')
+                .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté ${setAmount} et il a maintenant ${user.balance} kastocoins.`);
             } else {
-                interaction.editReply(
-                    `J'ai ajouté ${setAmount} kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant ${user.balance} kastocoins.`
-                );
+                embed = new EmbedBuilder()
+                .setTitle('Ajouter (Admin) :')
+                .setDescription(`J'ai ajouté **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`);
             }
+
+            interaction.editReply({ embeds: [embed] });
 
             trigger = 0
         } catch (error) {

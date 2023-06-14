@@ -1,4 +1,4 @@
-const { Client, Interaction, ApplicationCommandOptionType } = require('discord.js');
+const { Client, Interaction, ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const User = require('../../models/User');
 
 module.exports = {
@@ -23,7 +23,11 @@ module.exports = {
             await interaction.deferReply();
 
             if (targetUserId === interaction.member.id) {
-                interaction.editReply("N'y pense même pas :/");
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur...?')
+                    .setDescription('A quoi bon effectuer un virement pour toi ? :wink:')
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
@@ -41,24 +45,40 @@ module.exports = {
             let targetUser = await User.findOne(targetQuery);
 
             if (!ownUser) {
-                interaction.editReply(`<@${interaction.member.id}> Vous ne pouvez pas donner de l'argent à un autre personne quand votre ordinateur est infecté par un virus 😷🦠💻`)
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${interaction.member.id}> Vous ne pouvez pas effectuer de virement quand votre ordinateur est infecté par un virus 😷🦠💻`)
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
             if (!targetUser) {
-                interaction.editReply(`<@${targetUserId}> n'a pas encore de compte banquaire, vous ne pouvez pas lui donner de l'argent.`,);
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire, vous ne pouvez pas effectuer de virement sur un compte inexistant.`)
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
             if (setAmount < 0) {
-                interaction.editReply(`<@${interaction.member.id}>... POURQUOI TU ESSAIES DE PAYER UN MONTANT NÉGATIF ?!`)
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${interaction.member.id}>... POURQUOI TU ESSAIES DE PAYER UN MONTANT NÉGATIF ?!`)
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
             moneyDifference = ownUser.balance - setAmount
 
             if (moneyDifference < 0) {
-                interaction.editReply(`<@${interaction.member.id}>, tu n'as pas assez d'argent pour payer autant.`);
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${interaction.member.id}>, tu n'as pas assez d'argent pour effectuer de virement.`)
+                    .setColor('Red')
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
@@ -67,13 +87,21 @@ module.exports = {
             await ownUser.save();
             await targetUser.save();
 
-            interaction.editReply(`
-            <@${interaction.member.id}> a donné  **${setAmount}** kastocoins<@${targetUserId}>. 
-            \n <@${interaction.member.id}> a maintenant **${ownUser.balance}** kastocoins sur son compte.
-            \n <@${targetUserId}> a maintenant **${targetUser.balance}** kastocoins sur son compte.
-            `)
+            embed = new EmbedBuilder()
+                .setTitle('Virement :')
+                .setDescription(`<@${interaction.member.id}> a effectué un virment de **${setAmount}** kastocoins à <@${targetUserId}>. 
+                \n <@${interaction.member.id}> a maintenant **${ownUser.balance}** kastocoins sur son compte.
+                \n <@${targetUserId}> a maintenant **${targetUser.balance}** kastocoins sur son compte.`)
+                .setColor('Green');
+
+            interaction.editReply({ embeds: [embed] });
         } catch (error) {
             console.log(`Error with /pay : ${error}`);
+            embed = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue lors de l\'exécution de cette commande. Si cela se reproduit, veillez contacter @Kastocarma.')
+                .setColor('Red');
+            interaction.editReply({ embeds: [embed] });
         }
 
     },

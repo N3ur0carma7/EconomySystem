@@ -1,5 +1,5 @@
 const User = require('../../models/User');
-const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction } = require('discord.js');
+const { ApplicationCommandOptionType, PermissionFlagsBits, Client, Interaction, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     /**
@@ -31,20 +31,28 @@ module.exports = {
             let user = await User.findOne(query);
 
             if (!user) {
-                interaction.editReply(`<@${targetUserId}> n'a pas encore de compte banquaire. Pour lui en ajouter un manuellement, veillez exécuter la commande : /admin-add-account`);
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire. Pour lui en ajouter un manuellement, veillez exécuter la commande : /admin-add-account`);
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
             amountDifference = user.balance - setAmount
 
             if (setAmount < 0) {
-                interaction.editReply("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !");
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !");
+                interaction.editReply({ embeds: [embed] });
                 amountDifference = 0
                 return;
             }
 
             if (amountDifference < 0) {
-                interaction.editReply(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`);
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`);
                 amountDifference = 0
                 return;
             }
@@ -52,9 +60,11 @@ module.exports = {
             user.balance -= setAmount;
             await user.save();
 
-            interaction.editReply(
-                `J'ai enlevé ${setAmount} kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant ${user.balance} kastocoins.`
-            );
+            embed = new EmbedBuilder()
+                    .setTitle('Retirer (Admin) :')
+                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`);
+
+            interaction.editReply({ embeds: [embed] });
 
             amountDifference = 0
             
