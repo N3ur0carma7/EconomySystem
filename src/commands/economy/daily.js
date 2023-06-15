@@ -1,4 +1,4 @@
-const { Client, Interaction } = require('discord.js');
+const { Client, Interaction, EmbedBuilder } = require('discord.js');
 const User = require('../../models/User');
 
 const dailyAmount = 1000;
@@ -22,6 +22,7 @@ module.exports = {
     }
 
     try {
+      trigger = 0;
       await interaction.deferReply();
 
       const query = {
@@ -36,9 +37,11 @@ module.exports = {
         const currentDate = new Date().toDateString();
 
         if (lastDailyDate === currentDate) {
-          interaction.editReply(
-            'Tu as déjà récupéré ta récompense quotidienne. Reviens demain !'
-          );
+          embed = new EmbedBuilder()
+            .setTitle('Capitaliste !')
+            .setDescription(`Tu as déjà récupéré ta récompense quotidienne <@${interaction.member.id}>! Reviens demain! :money_with_wings: :money_with_wings: :money_with_wings: `)
+            .setColor('Red')
+          interaction.editReply({ embeds: [embed] });
           return;
         }
         
@@ -46,16 +49,28 @@ module.exports = {
       } else {
         user = new User({
           ...query,
+          balance: 100,
           lastDaily: new Date(),
         });
+        trigger = 1;
       }
 
       user.balance += dailyAmount;
       await user.save();
 
-      interaction.editReply(
-        `${dailyAmount} kastocoins ont été ajoutés à votre compte. Le nouveau montant de votre compte est de ${user.balance} kastocoins.`
-      );
+      if (trigger === 1) {
+        embed = new EmbedBuilder()
+          .setTitle('Récompense Quotidienne :')
+          .setDescription(`<@${interaction.member.id}>, votre compte banquaire a été créé. La récompense quotidienne vous donne **${dailyAmount}** kastocoins sur votre compte, vous avez donc au total **${user.balance}** kastocoins.`)
+          .setColor('Green');
+      } else {
+        embed = new EmbedBuilder()
+          .setTitle('Récompense Quotidienne :')
+          .setDescription(`**${dailyAmount}** kastocoins ont été ajoutés à votre compte <@${interaction.member.id}>. Le nouveau montant de votre compte est de **${user.balance}** kastocoins.`)
+          .setColor('Green');
+      }
+
+      interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.log(`Error with /daily: ${error}`);
     }

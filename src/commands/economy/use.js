@@ -42,7 +42,7 @@ module.exports = {
                 } else {
                     useAble = "Oui."
                 }
-                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Quantitée : ${item.quantity}. \n Utilisable : ${useAble}`});
+                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Quantitée : ${item.quantity}. \n Utilisable : ${useAble}`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });

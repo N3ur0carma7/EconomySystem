@@ -33,7 +33,8 @@ module.exports = {
             if (!user) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire. Pour lui en ajouter un manuellement, veillez exécuter la commande : /admin-add-account`);
+                    .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire. Pour lui en ajouter un manuellement, veillez exécuter la commande : /admin-add-account`)
+                    .setColor('Red');
                 interaction.editReply({ embeds: [embed] });
                 return;
             }
@@ -43,7 +44,8 @@ module.exports = {
             if (setAmount < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !");
+                    .setDescription("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !")
+                    .setColor('Red');
                 interaction.editReply({ embeds: [embed] });
                 amountDifference = 0
                 return;
@@ -52,7 +54,8 @@ module.exports = {
             if (amountDifference < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`);
+                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`)
+                    .setColor('Red');
                 amountDifference = 0
                 return;
             }
@@ -62,7 +65,8 @@ module.exports = {
 
             embed = new EmbedBuilder()
                     .setTitle('Retirer (Admin) :')
-                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`);
+                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`)
+                    .setColor('Green');
 
             interaction.editReply({ embeds: [embed] });
 

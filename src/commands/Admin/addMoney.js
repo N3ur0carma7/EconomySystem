@@ -34,17 +34,18 @@ module.exports = {
             if (!user) {
                 user = new User({
                     ...query,
-                    balance: 0,
+                    balance: 100,
                     lastDaily: 0,
                 });
                 trigger = 1
             }
 
             if (setAmount < 0) {
-                interaction.editReply({
-                    content: "Je ne peux pas ajouter de l'argent en dessous de 0.",
-                    ephemeral: true,
-                });
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription('Je ne peux pas ajouter de l\'argent en dessous de 0. Si vous cherchez à enlever de l\'argent, veillez exécuter /admin-remove-money.')
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
@@ -55,11 +56,13 @@ module.exports = {
             if (trigger === 1) {
                 embed = new EmbedBuilder()
                 .setTitle('Ajouter (Admin) :')
-                .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté ${setAmount} et il a maintenant ${user.balance} kastocoins.`);
+                .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté ${setAmount} et il a maintenant ${user.balance} kastocoins.`)
+                .setColor('Green');
             } else {
                 embed = new EmbedBuilder()
                 .setTitle('Ajouter (Admin) :')
-                .setDescription(`J'ai ajouté **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`);
+                .setDescription(`J'ai ajouté **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`)
+                .setColor('Green');
             }
 
             interaction.editReply({ embeds: [embed] });

@@ -44,7 +44,8 @@ module.exports = {
             if (setAmount < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription("Je ne peux pas mettre de l'argent en dessous de 0.");
+                    .setDescription("Je ne peux pas mettre de l'argent en dessous de 0.")
+                    .setColor('Red')
                 interaction.editReply({ embeds: [embed] });
                 return;
             }
@@ -52,7 +53,8 @@ module.exports = {
             if (setAmount === user.balance) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription("Le montant que vous avez mis correspond exactement au nombre d'argent de l'utilisateur.");
+                    .setDescription("Le montant que vous avez mis correspond exactement au nombre d'argent de l'utilisateur.")
+                    .setColor('Red')
                 interaction.editReply({ embeds: [embed] });
                 return;
             }
@@ -63,12 +65,14 @@ module.exports = {
             if (trigger === 1) {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
-                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **${user.balance}** kastocoins.`);
+                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **${user.balance}** kastocoins.`)
+                    .setColor('Green');
                 interaction.editReply({ embeds: [embed] });
             } else {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
-                    .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **${user.balance}** kastocoins.`);
+                    .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **${user.balance}** kastocoins.`)
+                    .setColor('Green');
                 interaction.editReply({ embeds: [embed] });
             }
 

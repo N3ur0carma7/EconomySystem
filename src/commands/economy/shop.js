@@ -26,10 +26,11 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle('Shop')
-                .setDescription('Items en vente dans la boutique :');
+                .setDescription('Items en vente dans la boutique :')
+                .setColor('Blue');
             
             shopItems.forEach(item => {
-                embed.addFields({ name:`${item.name}`, value: `Prix : **${item.price}** kastocoins.` });
+                embed.addFields({ name:`${item.name}`, value: `Prix : **${item.price}** kastocoins.`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
