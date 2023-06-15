@@ -146,9 +146,9 @@ module.exports = {
             console.error('Erreur lors de l\'exécution de la commande "shop":', error);
             embed1 = new EmbedBuilder()
                 .setTitle('Erreur code :')
-                .setDescription('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement. \n Si cette erreur se reproduit, veillez contacter @Kastocarma.')
+                .setDescription('Une erreur est survenue dans le code de la commande. Si cette erreur se reproduit, veillez contacter @Kastocarma.')
                 .setColor(0xf50505);
-            interaction.editReply({ embeds: [embed1] });
+            interaction.reply({ embeds: [embed1] });
         }
     },
 

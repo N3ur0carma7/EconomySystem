@@ -70,7 +70,7 @@ module.exports = {
           .setColor('Green');
       }
 
-      interaction.editReply({ embeds: [embed] });
+      interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.log(`Error with /daily: ${error}`);
     }

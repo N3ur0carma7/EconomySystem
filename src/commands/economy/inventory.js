@@ -54,7 +54,7 @@ module.exports = {
           .setTitle('Erreur Code :')
           .setDescription(`Une erreur s'est produite dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.`)
           .setColor('Red');
-        interaction.followUp({ embeds: [embed1] });
+        interaction.reply({ embeds: [embed1] });
     }
   },
 

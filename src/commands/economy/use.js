@@ -146,7 +146,7 @@ module.exports = {
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.editReply({ embeds: [embed1] });
+            interaction.reply({ embeds: [embed1] });
         }
     },
 
