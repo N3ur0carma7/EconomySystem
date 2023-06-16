@@ -24,7 +24,7 @@ module.exports = {
         try {
             interaction.deferReply();
 
-            let user = await User.findOne({ userId: userId, guildId: guildId });
+            let user = await User.find({ userId: userId, guildId: guildId });
 
             if (!user) {
                 embed = new EmbedBuilder()
@@ -37,9 +37,9 @@ module.exports = {
 
             const userRoles = interaction.member.roles.cache;
             const roleIds = userRoles.map((role) => role.id);
-            const hasRole = await Role.find({
-                guildId: guildId,
-                roleId: { $in: roleIds },
+            let hasRole = await Role.find({
+                  guildId: guildId, 
+                  roleId: { $in: roleIds } 
             });
 
             if (!hasRole) {
@@ -48,6 +48,7 @@ module.exports = {
 
         } catch (error) {
             console.log(`Error with command /salary : ${error}`)
+            interaction.deferReply();
             embed = new EmbedBuilder()
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.')
