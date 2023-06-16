@@ -15,19 +15,28 @@ module.exports = {
         await interaction.deferReply();
       const user = await User.findOne({ userId: targetUser });
       if (!user) {
-        interaction.editReply(`<@${targetUser}> n'a pas de compte banquaire, et donc d'items.`);
+        embed1 = new EmbedBuilder()
+          .setTitle('Erreur :')
+          .setDescription(`<@${targetUser}> n'a pas de compte banquaire, et donc d'items.`)
+          .setColor('Red');
+        interaction.editReply({ embeds: [embed1] });
         return;
       }
 
       const inventory = await Inventory.findOne({ userId: user.userId });
       if (!inventory) {
-        interaction.editReply(`<@${targetUser}> n'a pas d'inventaire.`);
+        embed1 = new EmbedBuilder()
+          .setTitle('Erreur :')
+          .setDescription(`<@${targetUser}> n'a pas d'inventaire.`)
+          .setColor('Red');
+        interaction.editReply({ embeds: [embed1] });
         return;
       }
 
       const embed = new EmbedBuilder()
         .setTitle(`Inventaire :`)
-        .setDescription(`Voici les objets dans l\'inventaire de <@${targetUser}> :`);
+        .setDescription(`Voici les objets dans l\'inventaire de <@${targetUser}> :`)
+        .setColor('Blue');
 
       inventory.items.forEach((item) => {
         if (item.usable === false) {
@@ -35,13 +44,17 @@ module.exports = {
         } else {
           useAble = "Oui.";
         }
-        embed.addFields({ name : item.name, value: `Quantité : ${item.quantity} \n Utilisable : ${useAble}`});
+        embed.addFields({ name : item.name, value: `Quantité : ${item.quantity} \n Utilisable : ${useAble}`, inline: true });
       });
 
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
         console.error('Erreur lors de l\'exécution de la commande "inventory":', error);
-        interaction.followUp('Une erreur s\'est produite lors de l\'exécution de la commande. Veuillez réessayer ultérieurement.');
+        embed1 = new EmbedBuilder()
+          .setTitle('Erreur Code :')
+          .setDescription(`Une erreur s'est produite dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.`)
+          .setColor('Red');
+        interaction.reply({ embeds: [embed1] });
     }
   },
 

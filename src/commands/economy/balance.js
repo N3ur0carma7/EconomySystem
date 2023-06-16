@@ -31,6 +31,7 @@ module.exports = {
                 return;
             }
 
+<<<<<<< HEAD
             const ownEmbed = new EmbedBuilder()
                 .setTitle('Balance :')
                 .setDescription(`<@${targetUserId}>, vous avez actuellement **${user.balance}** kastocoins sur votre compte.`);
@@ -38,6 +39,26 @@ module.exports = {
             const targetEmbed = new EmbedBuilder()
                 .setTitle('Balance :')
                 .setDescription(`<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`);
+=======
+        if (!user) {
+            embed = new EmbedBuilder()
+                .setTitle('Erreur :')
+                .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire.`)
+                .setColor('Red');
+            interaction.editReply({ embeds: [embed] });
+            return;
+        }
+
+        const ownEmbed = new EmbedBuilder()
+            .setTitle('Balance :')
+            .setDescription(`<@${targetUserId}>, vous avez actuellement **${user.balance}** kastocoins sur votre compte.`)
+            .setColor('Blue');
+
+        const targetEmbed = new EmbedBuilder()
+            .setTitle('Balance :')
+            .setDescription(`<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`)
+            .setColor('Blue');
+>>>>>>> 872a922cb3cbeed640c13a4d4998bdb998cdc6ad
         
             if (targetUserId === interaction.member.id) {
                 interaction.editReply({ embeds: [ownEmbed] })

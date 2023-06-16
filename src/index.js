@@ -15,7 +15,7 @@ const client = new Client({
 (async () => {
   try {
     mongoose.set('strictQuery', false);
-    await mongoose.connect(process.env.MONGODB_URI, { keepAlive: true });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected to DataBase.');
 
     eventHandler(client);
@@ -25,4 +25,3 @@ const client = new Client({
     console.log(`Error: ${error}`);
   }
 })();
-

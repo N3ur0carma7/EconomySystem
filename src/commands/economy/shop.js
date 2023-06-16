@@ -26,15 +26,21 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setTitle('Shop')
-                .setDescription('Items en vente dans la boutique :');
+                .setDescription('Items en vente dans la boutique :')
+                .setColor('Blue');
             
             shopItems.forEach(item => {
-                embed.addFields({ name:`${item.name}`, value: `Prix : **${item.price}** kastocoins.` });
+                embed.addFields({ name:`${item.name}`, value: `Prix : **${item.price}** kastocoins.`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
         } catch (error) {
-            console.error('Error with /shop:', error);
+            console.error(`Error while executing /shop command : ${error}`);
+            embed = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.')
+                .setColor('Red');
+            interaction.reply({ embeds: [embed] });
         }
     },
 

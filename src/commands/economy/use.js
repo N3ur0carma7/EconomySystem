@@ -42,7 +42,7 @@ module.exports = {
                 } else {
                     useAble = "Oui."
                 }
-                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Quantitée : ${item.quantity}. \n Utilisable : ${useAble}`});
+                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Quantitée : ${item.quantity}. \n Utilisable : ${useAble}`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
@@ -146,7 +146,7 @@ module.exports = {
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.editReply({ embeds: [embed1] });
+            interaction.reply({ embeds: [embed1] });
         }
     },
 
