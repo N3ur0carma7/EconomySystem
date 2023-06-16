@@ -38,22 +38,24 @@ module.exports = {
                 return;
             }
 
-            amountDifference = user.balance - setAmount
+            const amountDifference = user.balance - setAmount
 
             if (setAmount < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !");
+                    .setDescription("NON JE NE PEUX PAS ENLEVER DE L'ARGENT NÉGATIF !")
+                    .setColor('Red');
                 interaction.editReply({ embeds: [embed] });
-                amountDifference = 0
                 return;
             }
 
             if (amountDifference < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que ${user.balance} kastocoins.`);
-                amountDifference = 0
+                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que **${user.balance}** kastocoins.`)
+                    .setColor('Red');
+
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
@@ -62,11 +64,10 @@ module.exports = {
 
             embed = new EmbedBuilder()
                     .setTitle('Retirer (Admin) :')
-                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`);
+                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`)
+                    .setColor('Blue');
 
             interaction.editReply({ embeds: [embed] });
-
-            amountDifference = 0
             
         } catch (error) {
             console.log(`An error occured with /admin-remove-money : ${error}`);
