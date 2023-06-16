@@ -1,4 +1,4 @@
-const { Schema, model, models } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const roleIncomeSchema = new Schema({
     roleId: {
@@ -19,4 +19,4 @@ const roleIncomeSchema = new Schema({
     },
 });
 
-models.exports = model('Role Incomes', roleIncomeSchema);
+module.exports = model('Role Incomes', roleIncomeSchema);
