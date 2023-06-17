@@ -48,10 +48,15 @@ module.exports = {
             embed = new EmbedBuilder()
                 .setTitle('Création (Admin) :')
                 .setDescription(`Le compte banquaire de <@${targetUser}> à bien été créé. Il part avec un montant de **${user.balance}** kastocoins.`)
-                .setColor('Green');
+                .setColor('Blue');
             interaction.editReply({ embeds: [embed] });
         } catch (error) {
             console.log(`An error occured with /admin-add-account : ${error}`);
+            embed1 = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
+            interaction.reply({ embeds: [embed1] });
         }
     },
 

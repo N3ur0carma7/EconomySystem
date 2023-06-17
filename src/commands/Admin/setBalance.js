@@ -66,19 +66,24 @@ module.exports = {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
                     .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **${user.balance}** kastocoins.`)
-                    .setColor('Green');
+                    .setColor('Blue');
                 interaction.editReply({ embeds: [embed] });
             } else {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
                     .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **${user.balance}** kastocoins.`)
-                    .setColor('Green');
+                    .setColor('Blue');
                 interaction.editReply({ embeds: [embed] });
             }
 
             trigger = 0
         } catch (error) {
-            console.log(`An error occured with /admin-set-balance : ${error}`);
+            console.log(`Error with /admin-set-balance: ${error}`);
+            embed1 = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
+            interaction.reply({ embeds: [embed1] });
         }
         
     },

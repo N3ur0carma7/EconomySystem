@@ -73,6 +73,11 @@ module.exports = {
       interaction.reply({ embeds: [embed] });
     } catch (error) {
       console.log(`Error with /daily: ${error}`);
+      embed1 = new EmbedBuilder()
+        .setTitle('Erreur Code :')
+        .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+        .setColor('Red');
+      interaction.reply({ embeds: [embed1] });
     }
   },
 };

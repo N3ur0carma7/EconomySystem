@@ -143,11 +143,11 @@ module.exports = {
                 }
             });
         } catch (error) {
-            console.error('Erreur lors de l\'exécution de la commande "shop":', error);
+            console.error(`Error with /buy: ${error}`);
             embed1 = new EmbedBuilder()
-                .setTitle('Erreur code :')
-                .setDescription('Une erreur est survenue dans le code de la commande. Si cette erreur se reproduit, veillez contacter @Kastocarma.')
-                .setColor(0xf50505);
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
             interaction.reply({ embeds: [embed1] });
         }
     },

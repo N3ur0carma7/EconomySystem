@@ -57,11 +57,11 @@ module.exports = {
             }
         } catch (error) {
             console.log(`An error occured with /balance : ${error}`);
-            embed = new EmbedBuilder()
+            embed1 = new EmbedBuilder()
                 .setTitle('Erreur Code :')
-                .setDescription('Une erreur est survenue dans le code de cette commande. Si cela se reproduit, veillez contacter @Kastocarma')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.followUp({ embeds: [embed] });
+            interaction.reply({ embeds: [embed1] });
         }
     }, 
 

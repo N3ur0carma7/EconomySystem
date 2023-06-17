@@ -97,11 +97,11 @@ module.exports = {
             interaction.editReply({ embeds: [embed] });
         } catch (error) {
             console.log(`Error with /pay : ${error}`);
-            embed = new EmbedBuilder()
+            embed1 = new EmbedBuilder()
                 .setTitle('Erreur Code :')
-                .setDescription('Une erreur est survenue lors de l\'exécution de cette commande. Si cela se reproduit, veillez contacter @Kastocarma.')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.reply({ embeds: [embed] });
+            interaction.reply({ embeds: [embed1] });
         }
 
     },

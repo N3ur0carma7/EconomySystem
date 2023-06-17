@@ -1,7 +1,8 @@
 const { Client, Interaction, EmbedBuilder, Message } = require('discord.js');
 const User = require('../../models/User');
-const Cooldown = require('../../models/Cooldown');
+const Cooldown = require('../../models/RoleCooldown');
 const Role = require('../../models/RoleIncomes');
+const ms = require('ms');
 
 module.exports = {
     /**
@@ -22,7 +23,7 @@ module.exports = {
         const guildId = interaction.guild.id;
 
         try {
-            interaction.deferReply();
+            await interaction.deferReply();
 
             let user = await User.find({ userId: userId, guildId: guildId });
 
@@ -44,16 +45,19 @@ module.exports = {
 
             if (!hasRole) {
                 interaction.editReply('Lol it worked :wink:');
+                return;
             }
 
+            interaction.editReply('WTF');
+
+
         } catch (error) {
-            console.log(`Error with command /salary : ${error}`)
-            interaction.deferReply();
-            embed = new EmbedBuilder()
+            console.log(`Error with command /salary : ${error}`);
+            embed1 = new EmbedBuilder()
                 .setTitle('Erreur Code :')
-                .setDescription('Une erreur est survenue dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.editReply({ embeds: [embed] });
+            interaction.reply({ embeds: [embed1] });
         }
     },
 

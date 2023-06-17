@@ -9,6 +9,14 @@ module.exports = {
    * @param {Interaction} interaction 
    */
   callback: async (client, interaction) => {
+    if (!interaction.inGuild()) {
+      interaction.reply({
+        content: 'You can only run this command inside a server.',
+        ephemeral: true,
+      });
+      return;
+    }
+
     const targetUser = interaction.options.get('user')?.value || interaction.user.id;
 
     try {
@@ -49,11 +57,11 @@ module.exports = {
 
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
-        console.error('Erreur lors de l\'exécution de la commande "inventory":', error);
+        console.error(`Error with /inventory: ${error}`);
         embed1 = new EmbedBuilder()
-          .setTitle('Erreur Code :')
-          .setDescription(`Une erreur s'est produite dans le code de la commande. Si cela se reproduit, veillez contacter @Kastocarma.`)
-          .setColor('Red');
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
         interaction.reply({ embeds: [embed1] });
     }
   },

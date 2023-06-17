@@ -71,7 +71,12 @@ module.exports = {
             interaction.editReply({ embeds: [embed] });
             
         } catch (error) {
-            console.log(`An error occured with /admin-remove-money : ${error}`);
+            console.log(`Error with /admin-remove-money: ${error}`);
+            embed1 = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
+            interaction.reply({ embeds: [embed1] });
         }
         
     },

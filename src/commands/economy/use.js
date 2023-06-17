@@ -141,7 +141,7 @@ module.exports = {
             })
 
         } catch (error) {
-            console.error('Erreur lors de l\'exécution de la commande "use":', error);
+            console.error(`Error with /use: ${error}`);
             embed1 = new EmbedBuilder()
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')

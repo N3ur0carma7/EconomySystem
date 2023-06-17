@@ -69,7 +69,12 @@ module.exports = {
 
             trigger = 0
         } catch (error) {
-            console.log(`An error occured with /admin-add-money : ${error}`);
+            console.log(`Error with /admin-add-money: ${error}`);
+            embed1 = new EmbedBuilder()
+                .setTitle('Erreur Code :')
+                .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
+                .setColor('Red');
+            interaction.reply({ embeds: [embed1] });
         }
         
     },
