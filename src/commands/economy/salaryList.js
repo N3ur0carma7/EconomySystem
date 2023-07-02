@@ -25,7 +25,7 @@ module.exports = {
             if (roleList.length === 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Error :')
-                    .setDescription("There is no role incomes yet in this server.")
+                    .setDescription("Il n'y a pas encore de salaires sur ce serveur.")
                     .setColor('Red')
                 interaction.editReply({ embeds: [embed] });
                 return;
@@ -39,7 +39,7 @@ module.exports = {
                 .setColor('Blue');
             
             roleList.forEach((item, index) => {
-                mainEmbed.addFields({ name: `${index + 1}. ${item.name}`, value: `Role : <@&${item.roleId}> \n Montant : **${item.salaryAmount}** \n Cooldown : **${prettyMs(item.cooldown, { verbose: true })}**`, inline: true })
+                mainEmbed.addFields({ name: `${index + 1}. ${item.name}`, value: `Role : <@&${item.roleId}> \n Montant : **${item.salaryAmount}** \n Cooldown : **${prettyMs(item.cooldown, { verbose: true })}**`, inline: false })
             });
 
             interaction.editReply({ embeds: [mainEmbed] });

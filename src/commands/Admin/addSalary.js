@@ -20,7 +20,7 @@ module.exports = {
         const targetRoleId = interaction.options.get('target-role').value;
         const setAmount = interaction.options.get('amount').value;
         const setCooldown = interaction.options.get('cooldown').value;
-        const setName = interaction.options.get('name')?.value || 'Unnamed'
+        const setName = interaction.options.get('name').value;
     
         try {
             await interaction.deferReply();
@@ -127,6 +127,7 @@ module.exports = {
             name: 'name',
             description: "Le nom à donner au salaire.",
             type: ApplicationCommandOptionType.String,
+            required: true,
         }
     ],
     permissionsRequired: [PermissionFlagsBits.Administrator],

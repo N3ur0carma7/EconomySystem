@@ -9,16 +9,14 @@ const roleCooldownSchema = new Schema({
         type: String,
         required: true,
     },
-    roles: [
-        {
-            roleId: {
-                type: String,
-            },
-            endsAt: {
-                type: Date,
-            },
-        }
-    ],
+    roleId: {           
+        type: String,
+        required: true,
+    },
+    endsAt: {
+        type: Date,
+        default: 0,
+    }
 });
 
 module.exports = model('Role Cooldown', roleCooldownSchema);

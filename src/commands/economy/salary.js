@@ -1,4 +1,4 @@
-const { Client, Interaction, EmbedBuilder, Message } = require('discord.js');
+const { Client, Interaction, EmbedBuilder, time } = require('discord.js');
 const User = require('../../models/User');
 const Cooldown = require('../../models/RoleCooldown');
 const Role = require('../../models/RoleIncomes');
@@ -25,7 +25,7 @@ module.exports = {
         try {
             await interaction.deferReply();
 
-            let user = await User.find({ userId: userId, guildId: guildId });
+            let user = await User.findOne({ userId: userId, guildId: guildId });
 
             if (!user) {
                 embed = new EmbedBuilder()
@@ -43,12 +43,79 @@ module.exports = {
                   roleId: { $in: roleIds } 
             });
 
-            if (!hasRole) {
-                interaction.editReply('Lol it worked :wink:');
+            if (hasRole.length === 0) {
+                embed = new EmbedBuilder()
+                    .setTitle('Erreur :')
+                    .setDescription(`<@${interaction.user.id}>, vous n'avez aucun salaire.`)
+                    .setColor('Red');
+                interaction.editReply({ embeds: [embed] });
                 return;
             }
 
-            interaction.editReply('WTF');
+            const mainEmbed = new EmbedBuilder()
+                    .setTitle('Salaires :')
+                    .setDescription(`Voici vos salaires :`)
+                    .setColor('Blue');
+                
+           await Promise.all(hasRole.map(async (role, index) => {
+                let cooldown = await Cooldown.findOne({ userId: interaction.user.id, roleId: role.roleId });
+                if (!cooldown) {
+                    cooldown = new Cooldown({
+                        userId: interaction.user.id,
+                        guildId: interaction.guild.id,
+                        roleId: role.roleId,
+                        endsAt: Date.now()+role.cooldown,
+                    })
+
+                    await cooldown.save();
+
+                    user.balance += role.salaryAmount;
+
+                    await user.save();
+
+                    roleTime = new Date(cooldown.endsAt);
+
+                    goodTime = time(roleTime);
+
+                    relativeTime = time(roleTime, 'R');
+
+                    mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **${role.salaryAmount}** \n Prochain Salaire ${relativeTime}`, inline: false });
+                    return;
+                } else {
+                    if (cooldown.endsAt > Date.now()) {
+
+                        roleTime = new Date(cooldown.endsAt);
+
+                        goodTime = time(roleTime);
+
+                        relativeTime = time(roleTime, 'R');
+
+                        mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Cooldown Actif !** \n Le cooldown sur ce rôle est toujours actif, vous pourrez récupérer votre salaire ${relativeTime}.`, inline: false });
+                        return;
+                    } else {
+                        cooldown.endsAt = Date.now() + role.cooldown;
+
+                        await cooldown.save();
+
+                        user.balance += role.salaryAmount;
+
+                        await user.save();
+
+                        roleTime = new Date(cooldown.endsAt);
+
+                        goodTime = time(roleTime);
+
+                        relativeTime = time(roleTime, 'R');
+
+                        mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **${role.salaryAmount}** \n Prochain Salaire dans ${relativeTime}`, inline: false });
+                        return;
+                    }
+                }
+            }));
+
+            mainEmbed.addFields({ name: `- MONTANT SUR LE COMPTE -`, value: `Vous avez maintenant **${user.balance}** kastocoins sur votre compte` });
+
+            interaction.editReply({ embeds: [mainEmbed] });
 
 
         } catch (error) {

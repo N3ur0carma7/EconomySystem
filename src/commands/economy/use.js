@@ -65,9 +65,9 @@ module.exports = {
 
                 if (isNaN(input)) {
                     embed1 = new EmbedBuilder()
-                        .setTitle('Erreur :')
-                        .setDescription('Veuillez entrer le numéro de l\'objet que vous souhaitez utiliser.')
-                        .setColor('Red');
+                    .setTitle('Erreur :')
+                    .setDescription('Veuillez entrer le numéro de l\'objet que vous souhaitez utiliser.')
+                    .setColor('Red');
                     message.reply({ embeds: [embed1] });
                     return;
                 }
