@@ -18,5 +18,10 @@
         "name": "Lootbox Cartes",
         "price": 1500,
         "usable": true
+    },
+    {
+        "name": "La dignité de Neuro",
+        "price": 0.1,
+        "usable": "true"
     }
 ]

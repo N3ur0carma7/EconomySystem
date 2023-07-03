@@ -61,23 +61,23 @@ module.exports = {
       if (trigger === 1) {
         embed = new EmbedBuilder()
           .setTitle('Récompense Quotidienne :')
-          .setDescription(`<@${interaction.member.id}>, votre compte banquaire a été créé. La récompense quotidienne vous donne **${dailyAmount}** kastocoins sur votre compte, vous avez donc au total **${user.balance}** kastocoins.`)
+          .setDescription(`<@${interaction.member.id}>, votre compte banquaire a été créé! \n La récompense quotidienne vous donne **${dailyAmount}** kastocoins sur votre compte, vous avez donc au total **${user.balance}** kastocoins.`)
           .setColor('Green');
       } else {
         embed = new EmbedBuilder()
           .setTitle('Récompense Quotidienne :')
-          .setDescription(`**${dailyAmount}** kastocoins ont été ajoutés à votre compte <@${interaction.member.id}>. Le nouveau montant de votre compte est de **${user.balance}** kastocoins.`)
+          .setDescription(`**${dailyAmount}** kastocoins ont été ajoutés à votre compte <@${interaction.member.id}>. \n Vous avez maintenant **${user.balance}** kastocoins sur votre compte.`)
           .setColor('Green');
       }
 
-      interaction.reply({ embeds: [embed] });
+      interaction.editReply({ embeds: [embed] });
     } catch (error) {
       console.log(`Error with /daily: ${error}`);
       embed1 = new EmbedBuilder()
         .setTitle('Erreur Code :')
         .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
         .setColor('Red');
-      interaction.reply({ embeds: [embed1] });
+      interaction.editReply({ embeds: [embed1] });
     }
   },
 };
