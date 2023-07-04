@@ -20,8 +20,8 @@
         "usable": true
     },
     {
-        "name": "La dignité de Neuro",
-        "price": 0.1,
-        "usable": "true"
+        "name": "Ticket du Casino",
+        "price": 500,
+        "usable": true
     }
 ]

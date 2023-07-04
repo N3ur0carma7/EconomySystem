@@ -10,7 +10,7 @@ module.exports = async (client, interaction, userId, guildId) => {
         const inventory = await Inventory.findOne({ userId: userId, guildId: guildId });
         const currentVersion = inventory.__v;
         const randomCardNumber = Math.floor(Math.random() * 10)+1;
-        const existingItem = inventory.items.find(item => item.name === `Carte ${randomCardNumber}`);
+        const existingItem = await inventory.items.find(item => item.name === `Carte ${randomCardNumber}`);
         if (!existingItem) {
             inventory.items.push({ name: `Carte ${randomCardNumber}`, quantity: 1, usable: true });
         } else {
@@ -21,7 +21,7 @@ module.exports = async (client, interaction, userId, guildId) => {
             { userId: userId, guildId: guildId, __v: currentVersion },
             { items: inventory.items },
             { new: true }
-          );
+        );
           
           if (!updatedInventory) {
             embed = new EmbedBuilder()

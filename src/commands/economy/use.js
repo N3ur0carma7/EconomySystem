@@ -1,6 +1,7 @@
 const { Client, Interaction, EmbedBuilder } = require('discord.js');
 const Inventory = require('../../models/Inventory');
 const lootboxOpen = require('../../functions/use/lootbox');
+const casinoTicket = require('../../functions/use/casinoTicket');
 
 
 module.exports = {
@@ -113,6 +114,10 @@ module.exports = {
 
                 if (existingItem.name === "Lootbox Cartes") {
                     lootboxOpen(client, interaction, userId, guildId);
+                }
+
+                if (existingItem.name === "Ticket du Casino") {
+                    casinoTicket(client, interaction, userId, guildId);
                 }
 
                 embed1 = new EmbedBuilder()

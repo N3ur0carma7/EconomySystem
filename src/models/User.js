@@ -17,6 +17,10 @@ const userSchema = new Schema({
     type: Date,
     reqired: true,
   },
+  casinoEnd: {
+    type: Date,
+    default: 0,
+  }
 });
 
 module.exports = model('User', userSchema);
