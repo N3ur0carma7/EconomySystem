@@ -52,7 +52,7 @@ module.exports = {
                 .setColor(0x02eefa);
             
             shopItems.forEach((item, index) => {
-                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Prix : ${item.price} kastocoins.`, inline: true });
+                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Prix : **${item.price}** kastocoins.`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
