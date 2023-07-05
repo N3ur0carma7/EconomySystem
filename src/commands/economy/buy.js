@@ -52,13 +52,13 @@ module.exports = {
                 .setColor(0x02eefa);
             
             shopItems.forEach((item, index) => {
-                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Prix : **${item.price}** kastocoins.`, inline: true });
+                embed.addFields({ name: `${index + 1}. ${item.name}`, value: `Prix : **$${item.price}**.`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
 
             const filter = (message) => message.author.id === userId;
-            collector = interaction.channel.createMessageCollector({ filter, time: 15000 });
+            collector = interaction.channel.createMessageCollector({ filter, time: 30000 });
 
             collector.on('collect', async (message) => {
                 const input = message.content;
@@ -99,7 +99,7 @@ module.exports = {
                 if (user.balance < totalPrice) {
                     embed1 = new EmbedBuilder()
                         .setTitle('Paiement Refusé :')
-                        .setDescription(`Vous n\'avez que **${user.balance}** kastocoins, l'item que vous souhaitez coute **${totalPrice}** kastocoins.`)
+                        .setDescription(`Vous n\'avez que **$${user.balance}**, l'item que vous souhaitez coute **$${totalPrice}**.`)
                         .setColor(0xf50505);
                     message.reply({ embeds: [embed1] });
                     return;
@@ -108,6 +108,16 @@ module.exports = {
                 const existingItem = inventory.items.find(item => item.name === selectedItem.name);
 
                 if (existingItem) {
+                    if (selectedItem.name === "Ticket du Casino") {
+                        if (existingItem.quantity === 1) {
+                            embed1 = new EmbedBuilder()
+                                .setTitle('Erreur :')
+                                .setDescription("Vous avez déjà un ticket du Casino, vous ne pouvez pas en acheter plusieurs.")
+                                .setColor('Red');
+                            message.reply({ embeds: [embed1] });
+                            return;
+                        }
+                    }
                     existingItem.quantity++;
                 } else {
                     inventory.items.push({ name: selectedItem.name, quantity: 1, usable: selectedItem.usable });
@@ -120,7 +130,7 @@ module.exports = {
 
                 embed1 = new EmbedBuilder()
                     .setTitle('Paiement Réussi :')
-                    .setDescription(`Vous avez acheté un ${selectedItem.name} pour **${selectedItem.price}** kastocoins. Il vous reste **${user.balance}** kastocoins sur votre compte`)
+                    .setDescription(`Vous avez acheté un ${selectedItem.name} pour **$${selectedItem.price}**. Il vous reste **$${user.balance}** sur votre compte`)
                     .setColor(0x3cfa02);
                 message.reply({ embeds: [embed1] });
             });
@@ -148,7 +158,7 @@ module.exports = {
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')
                 .setColor('Red');
-            interaction.reply({ embeds: [embed1] });
+            interaction.followUp({ embeds: [embed1] });
         }
     },
 

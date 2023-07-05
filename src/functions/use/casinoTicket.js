@@ -12,7 +12,7 @@ module.exports = async (client, interaction, userId, guildId) => {
         const currentVersionInventory = inventory.__v;
         const user = await User.findOne({ userId: userId, guildId: guildId });
         const currentVersionUser = user.__v;
-        const currentDate = new Date();
+        const currentDate = Date.now();
         const existingItem = await inventory.items.find(item => item.name === `Ticket du Casino`);
 
         if (user.casinoEnd > currentDate) {

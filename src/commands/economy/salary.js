@@ -95,17 +95,15 @@ module.exports = {
                     } else {
                         cooldown.endsAt = Date.now() + role.cooldown;
 
-                        await cooldown.save();
-
                         user.balance += role.salaryAmount;
-
-                        await user.save();
 
                         roleTime = new Date(cooldown.endsAt);
 
                         goodTime = time(roleTime);
 
                         relativeTime = time(roleTime, 'R');
+                        
+                        await cooldown.save();    
 
                         mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **${role.salaryAmount}** \n Prochain Salaire dans ${relativeTime}`, inline: false });
                         return;
@@ -113,6 +111,8 @@ module.exports = {
                 }
             }));
 
+            await user.save();
+        
             mainEmbed.addFields({ name: `- MONTANT SUR LE COMPTE -`, value: `Vous avez maintenant **${user.balance}** kastocoins sur votre compte` });
 
             interaction.editReply({ embeds: [mainEmbed] });

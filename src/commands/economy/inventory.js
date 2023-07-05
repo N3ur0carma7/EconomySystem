@@ -46,18 +46,18 @@ module.exports = {
         .setDescription(`Voici les objets dans l\'inventaire de <@${targetUser}> :`)
         .setColor('Blue');
 
-      inventory.items.forEach((item) => {
+      inventory.items.forEach((item, index) => {
         if (item.usable === false) {
           useAble = "Non.";
         } else {
           useAble = "Oui.";
         }
-        embed.addFields({ name : item.name, value: `Quantité : ${item.quantity} \n Utilisable : ${useAble}`, inline: true });
+        embed.addFields({ name : `${index + 1}. ${item.name}`, value: `Quantité : ${item.quantity} \n Utilisable : ${useAble}`, inline: true });
       });
 
       interaction.editReply({ embeds: [embed] });
     } catch (error) {
-        console.error(`Error with /inventory: ${error}`);
+        console.log(`Error with /inventory: ${error}`);
         embed1 = new EmbedBuilder()
                 .setTitle('Erreur Code :')
                 .setDescription('Une erreur est survenue dans le code. Si cela se reproduit veillez contacter @Kastocarma')

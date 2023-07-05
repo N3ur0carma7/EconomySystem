@@ -23,7 +23,7 @@ module.exports = {
 
   name: 'ping',
   description: 'Replies with the bot ping!',
-  // devOnly: true,
-  testOnly: true,
-  // deleted: true,
+  //devOnly: true,
+  //testOnly: true,
+  //deleted: true,
 };
