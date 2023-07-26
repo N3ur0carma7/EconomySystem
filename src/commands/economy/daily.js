@@ -61,12 +61,12 @@ module.exports = {
       if (trigger === 1) {
         embed = new EmbedBuilder()
           .setTitle('Récompense Quotidienne :')
-          .setDescription(`<@${interaction.member.id}>, votre compte banquaire a été créé! \n La récompense quotidienne vous donne **${dailyAmount}** kastocoins sur votre compte, vous avez donc au total **${user.balance}** kastocoins.`)
+          .setDescription(`<@${interaction.member.id}>, votre compte banquaire a été créé! \n La récompense quotidienne vous donne **$${dailyAmount}** sur votre compte, vous avez donc au total **$${user.balance}**.`)
           .setColor('Green');
       } else {
         embed = new EmbedBuilder()
           .setTitle('Récompense Quotidienne :')
-          .setDescription(`**${dailyAmount}** kastocoins ont été ajoutés à votre compte <@${interaction.member.id}>. \n Vous avez maintenant **${user.balance}** kastocoins sur votre compte.`)
+          .setDescription(`**$${dailyAmount}** ont été ajoutés à votre compte <@${interaction.member.id}>. \n Vous avez maintenant **$${user.balance}** sur votre compte.`)
           .setColor('Green');
       }
 

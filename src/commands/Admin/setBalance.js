@@ -65,13 +65,13 @@ module.exports = {
             if (trigger === 1) {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
-                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **${user.balance}** kastocoins.`)
+                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un et il a maintenant **$${user.balance}**.`)
                     .setColor('Blue');
                 interaction.editReply({ embeds: [embed] });
             } else {
                 embed = new EmbedBuilder()
                     .setTitle('Modification (Admin) :')
-                    .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **${user.balance}** kastocoins.`)
+                    .setDescription(`Le compte banquaire de <@${targetUserId}> a maintenant **$${user.balance}**.`)
                     .setColor('Blue');
                 interaction.editReply({ embeds: [embed] });
             }

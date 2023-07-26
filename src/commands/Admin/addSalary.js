@@ -84,7 +84,7 @@ module.exports = {
 
             embed = new EmbedBuilder()
                 .setTitle('Ajout Salaire (Admin) :')
-                .setDescription(`Le role <@&${targetRoleId}> a bien été ajouté à la liste des salaires avec comme nom : **${setName}**. \n Montant tous les **${prettyMs(msCooldown, { verbose: true })}** : **${setAmount}** kastocoins.`)
+                .setDescription(`Le role <@&${targetRoleId}> a bien été ajouté à la liste des salaires avec comme nom : **${setName}**. \n Montant tous les **${prettyMs(msCooldown, { verbose: true })}** : **$${setAmount}**.`)
                 .setColor('Green');
             interaction.editReply({ embeds: [embed] });
 

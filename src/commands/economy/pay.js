@@ -89,9 +89,9 @@ module.exports = {
 
             embed = new EmbedBuilder()
                 .setTitle('Virement :')
-                .setDescription(`<@${interaction.member.id}> a effectué un virment de **${setAmount}** kastocoins à <@${targetUserId}>. 
-                \n <@${interaction.member.id}> a maintenant **${ownUser.balance}** kastocoins sur son compte.
-                \n <@${targetUserId}> a maintenant **${targetUser.balance}** kastocoins sur son compte.`)
+                .setDescription(`<@${interaction.member.id}> a effectué un virment de **$${setAmount}** à <@${targetUserId}>. 
+                \n <@${interaction.member.id}> a maintenant **$${ownUser.balance}** sur son compte.
+                \n <@${targetUserId}> a maintenant **$${targetUser.balance}** sur son compte.`)
                 .setColor('Green');
 
             interaction.editReply({ embeds: [embed] });

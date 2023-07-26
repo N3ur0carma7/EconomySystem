@@ -39,7 +39,7 @@ module.exports = {
                 .setColor('Blue');
             
             roleList.forEach((item, index) => {
-                mainEmbed.addFields({ name: `${index + 1}. ${item.name}`, value: `Role : <@&${item.roleId}> \n Montant : **${item.salaryAmount}** \n Cooldown : **${prettyMs(item.cooldown, { verbose: true })}**`, inline: false })
+                mainEmbed.addFields({ name: `${index + 1}. ${item.name}`, value: `Role : <@&${item.roleId}> \n Montant : **$${item.salaryAmount}** \n Cooldown : **${prettyMs(item.cooldown, { verbose: true })}**`, inline: false })
             });
 
             interaction.editReply({ embeds: [mainEmbed] });

@@ -43,7 +43,7 @@ module.exports = {
             if (setAmount < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription('Je ne peux pas ajouter de l\'argent en dessous de 0.')
+                    .setDescription('Je ne peux pas ajouter de l\'argent en dessous de $0.')
                     .setColor('Red')
                 interaction.editReply({ embeds: [embed] });
                 return;
@@ -56,12 +56,12 @@ module.exports = {
             if (trigger === 1) {
                 embed = new EmbedBuilder()
                     .setTitle('Ajouter (Admin) :')
-                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté **${setAmount}** kastocoins et il a maintenant **${user.balance}** kastocoins.`)
+                    .setDescription(`<@${targetUserId}> n'avais pas de compte banquaire. Je lui en ai créé un, je lui ai rajouté **$${setAmount}** et il a maintenant **$${user.balance}**.`)
                     .setColor('Blue');
             } else {
                 embed = new EmbedBuilder()
                     .setTitle('Ajouter (Admin) :')
-                    .setDescription(`J'ai ajouté **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`)
+                    .setDescription(`J'ai ajouté **$${setAmount}** au compte bancaire de <@${targetUserId}>. Il a maintenant **$${user.balance}**.`)
                     .setColor('Blue');
             }
 
@@ -80,14 +80,14 @@ module.exports = {
     },
 
     name: 'admin-add-money',
-    description: "Permet d'ajouter de l'argent au compte banquaire d'un membre.",
+    description: "Permet d'ajouter de l'argent au compte bancaire d'un membre.",
     // devOnly: true,
     // testOnly: true,
     // deleted: true,
     options: [
         {
             name: 'target-user',
-            description: "L'utilisateur à modifier le compte banquaire.",
+            description: "L'utilisateur à modifier le compte bancaire.",
             type: ApplicationCommandOptionType.User,
             required: true,
         },

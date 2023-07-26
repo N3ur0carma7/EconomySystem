@@ -53,7 +53,7 @@ module.exports = {
             if (amountDifference < 0) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que **${user.balance}** kastocoins.`)
+                    .setDescription(`Je ne peux pas enlever autant d'argent à cet utilisateur car il n'a que *${user.balance}**.`)
                     .setColor('Red');
 
                 interaction.editReply({ embeds: [embed] });
@@ -65,7 +65,7 @@ module.exports = {
 
             embed = new EmbedBuilder()
                     .setTitle('Retirer (Admin) :')
-                    .setDescription(`J'ai enlevé **${setAmount}** kastocoins au compte banquaire de <@${targetUserId}>. Il a maintenant **${user.balance}** kastocoins.`)
+                    .setDescription(`J'ai enlevé **$${setAmount}** au compte banquaire de <@${targetUserId}>. Il a maintenant **$${user.balance}**.`)
                     .setColor('Blue');
 
             interaction.editReply({ embeds: [embed] });

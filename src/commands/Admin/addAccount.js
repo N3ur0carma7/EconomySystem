@@ -31,7 +31,7 @@ module.exports = {
             if (user) {
                 embed = new EmbedBuilder()
                     .setTitle('Erreur :')
-                    .setDescription(`<@${targetUser}> a déjà un compte banquaire.`)
+                    .setDescription(`<@${targetUser}> a déjà un compte bancaire.`)
                     .setColor('Red');
                 interaction.editReply({ embeds: [embed] });
                 return;
@@ -47,7 +47,7 @@ module.exports = {
 
             embed = new EmbedBuilder()
                 .setTitle('Création (Admin) :')
-                .setDescription(`Le compte banquaire de <@${targetUser}> à bien été créé. Il part avec un montant de **${user.balance}** kastocoins.`)
+                .setDescription(`Le compte bancaire de <@${targetUser}> à bien été créé. Il part avec un montant de **${user.balance}** kastocoins.`)
                 .setColor('Blue');
             interaction.editReply({ embeds: [embed] });
         } catch (error) {
@@ -61,7 +61,7 @@ module.exports = {
     },
 
     name: 'admin-create-account',
-    description: "Permet de créer manuellement le compte banquaire d'un membre",
+    description: "Permet de créer manuellement le compte bancaire d'un membre",
     options: [
         {
             name: 'target-user',

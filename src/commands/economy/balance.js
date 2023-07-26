@@ -31,23 +31,14 @@ module.exports = {
                 return;
             }
 
-        if (!user) {
-            embed = new EmbedBuilder()
-                .setTitle('Erreur :')
-                .setDescription(`<@${targetUserId}> n'a pas encore de compte banquaire.`)
-                .setColor('Red');
-            interaction.editReply({ embeds: [embed] });
-            return;
-        }
-
         const ownEmbed = new EmbedBuilder()
             .setTitle('Balance :')
-            .setDescription(`<@${targetUserId}>, vous avez actuellement **${user.balance}** kastocoins sur votre compte.`)
+            .setDescription(`<@${targetUserId}>, vous avez actuellement **$${user.balance}** sur votre compte.`)
             .setColor('Blue');
 
         const targetEmbed = new EmbedBuilder()
             .setTitle('Balance :')
-            .setDescription(`<@${targetUserId}> a actuellement **${user.balance}** kastocoins sur son compte.`)
+            .setDescription(`<@${targetUserId}> a actuellement **$${user.balance}** sur son compte.`)
             .setColor('Blue');
         
             if (targetUserId === interaction.member.id) {
@@ -73,7 +64,7 @@ module.exports = {
     options:[
         {
             name: 'target-user',
-            description: "Choisisez un utilisateur pour regarder son nombre de kastocoins.",
+            description: "Choisisez un utilisateur pour regarder l'argent qu'il a sur son compte.",
             type: ApplicationCommandOptionType.User,
         }
     ]

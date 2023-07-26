@@ -79,7 +79,7 @@ module.exports = {
 
                     relativeTime = time(roleTime, 'R');
 
-                    mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **${role.salaryAmount}** \n Prochain Salaire ${relativeTime}`, inline: false });
+                    mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **$${role.salaryAmount}** \n Prochain Salaire ${relativeTime}`, inline: false });
                     return;
                 } else {
                     if (cooldown.endsAt > Date.now()) {
@@ -105,7 +105,7 @@ module.exports = {
                         
                         await cooldown.save();    
 
-                        mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **${role.salaryAmount}** \n Prochain Salaire dans ${relativeTime}`, inline: false });
+                        mainEmbed.addFields({ name: `${index + 1}. ${role.name}`, value: `**Recupéré !** \n Salaire : **$${role.salaryAmount}** \n Prochain Salaire dans ${relativeTime}`, inline: false });
                         return;
                     }
                 }
@@ -113,7 +113,7 @@ module.exports = {
 
             await user.save();
         
-            mainEmbed.addFields({ name: `- MONTANT SUR LE COMPTE -`, value: `Vous avez maintenant **${user.balance}** kastocoins sur votre compte` });
+            mainEmbed.addFields({ name: `- MONTANT SUR LE COMPTE -`, value: `Vous avez maintenant **$${user.balance}** sur votre compte` });
 
             interaction.editReply({ embeds: [mainEmbed] });
 

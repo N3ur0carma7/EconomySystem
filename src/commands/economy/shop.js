@@ -30,7 +30,7 @@ module.exports = {
                 .setColor('Blue');
             
             shopItems.forEach(item => {
-                embed.addFields({ name:`${item.name}`, value: `Prix : **${item.price}** kastocoins.`, inline: true });
+                embed.addFields({ name:`${item.name}`, value: `Prix : **$${item.price}**.`, inline: true });
             });
 
             interaction.editReply({ embeds: [embed] });
