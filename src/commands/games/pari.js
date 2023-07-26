@@ -63,7 +63,7 @@ module.exports = {
                 return;
             }
 
-            const didWin = Math.random() > 0.75;
+            const didWin = Math.random() > 0.70;
 
             if (!didWin) {
                 user.balance -= setAmount;
@@ -71,13 +71,13 @@ module.exports = {
 
                 embed = new EmbedBuilder()
                     .setTitle('Dommage :')
-                    .setDescription(`Quel dommage ! Votre pari a échoué et vous avez perdu **$${setAmount}**.`)
+                    .setDescription(`Quel dommage ! Votre pari a échoué et vous avez perdu **$${setAmount}**. Votre compte est maintenant à **$${user.balance}**.`)
                     .setColor('DarkRed');
                 interaction.editReply({ embeds: [embed] });
                 return;
             }
 
-            const amountWon = Number((setAmount * (Math.random() + 0.55)).toFixed(0));
+            const amountWon = Number((setAmount * (Math.random() + 1)).toFixed(0));
 
             user.balance += amountWon;
             await user.save();
