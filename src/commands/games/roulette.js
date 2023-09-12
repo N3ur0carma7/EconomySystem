@@ -56,7 +56,7 @@ module.exports = {
 
             mainEmbed = new EmbedBuilder()
                 .setTitle('Roulette Russe :')
-                .setDescription(`Vous pariez **$${setAmount}** <@${interaction.user.id}>... Le pistolet est prêt à faire feu pour **3** essais...`)
+                .setDescription(`Vous pariez **$${setAmount}** <@${interaction.user.id}>... En attente d'autres joueurs...`)
                 .setColor('DarkBlue');
             interaction.editReply({ embeds: [mainEmbed] });
 
@@ -120,9 +120,9 @@ module.exports = {
 
     name: 'roulette',
     description: "Permet de parier avec la roulette russe",
-    devOnly: true,
+    //devOnly: true,
     //testOnly: true,
-    //deleted: true,
+    deleted: true,
     options: [
         {
             name: 'amount',
